@@ -141,4 +141,15 @@ class Basket {
         
         return totalPrice
     }
+    
+    
+    /// The total price will be formatted as currency displaying two decimal places
+    /// And iOS have the representation of the coin it will show else it will shou the currency code
+    /// Ex: US Dollar: $ 1.30 | Afghan Afghani: AFN 1.30
+    ///
+    /// - Returns: Formatted Currency
+    public func totalPriceFormatted() -> String {
+        
+        return Utility.formatCurrency(value: totalPrice(), currencyCode: currencyCode)
+    }
 }

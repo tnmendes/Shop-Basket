@@ -12,7 +12,7 @@
         <!--Basket Table View Controller-->
         <scene sceneID="Hon-H1-Zvt">
             <objects>
-                <viewController id="tbE-L5-rg9" customClass="BasketTableViewController" customModule="projectBasket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BasketTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tbE-L5-rg9" customClass="BasketTableViewController" customModule="projectBasket" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MTr-Dl-hUj"/>
                         <viewControllerLayoutGuide type="bottom" id="khl-92-iYd"/>

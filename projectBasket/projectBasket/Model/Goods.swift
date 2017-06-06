@@ -13,10 +13,10 @@ class Goods {
     
     /// Array to populate the list of the goods
     let arrGoodsToPopulate =   [
-        ["Peas", 0.95, "bag", "bags"],
-        ["Eggs", 2.10, "dozen","dozen"],
-        ["Milk", 1.30, "bottle", "bottles"],
-        ["Beans", 0.73, "can", "cans"]
+        [10001, "Peas", 0.95, "bag", "bags"],
+        [10002, "Eggs", 2.10, "dozen","dozen"],
+        [10003, "Milk", 1.30, "bottle", "bottles"],
+        [10004, "Beans", 0.73, "can", "cans"]
     ]
     var arrGoods: Array<Good>? = []
     
@@ -44,11 +44,12 @@ class Goods {
         
         for good in arrGoodsToPopulate {
             
-            arrGoods?.append(Good(name: good[0] as! String,
-                                  price: good[1] as! Double,
-                                  descriptionContainer: good[2] as? String,
-                                  descriptionContainerPlural: good[3] as? String))
+            arrGoods?.append(Good(uid: good[0] as! Int,
+                                  name: good[1] as! String,
+                                  price: good[2] as! Double,
+                                  descriptionContainer: good[3] as? String,
+                                  descriptionContainerPlural: good[4] as? String))
         }
     }
-    
+
 }

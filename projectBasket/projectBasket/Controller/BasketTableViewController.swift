@@ -6,7 +6,6 @@
 //  Copyright © 2017 mendes. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class BasketTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -76,7 +75,7 @@ class BasketTableViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BasketCustomTableViewCell
         cell.labName.text = "\(listGoods![indexPath.row].getName())"
         
-        cell.labPrice.text = "\(listGoods![indexPath.row].getPrice())"
+        cell.labPrice.text = Utility.formatCurrency(value: listGoods![indexPath.row].getPrice(), currencyCode: Configuration.defaultCurrencyCode)
         cell.buttonAdd.tag = indexPath.row
         cell.buttonAdd.addTarget(self, action: #selector(self.buttonTappedAdd(sender:)), for: .touchUpInside)
         cell.buttonRemove.tag = indexPath.row
@@ -91,7 +90,9 @@ class BasketTableViewController: UIViewController, UITableViewDelegate, UITableV
     /// Navigate to the Checkout
     func buttonTappedCheckout(){
         
-        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Checkout", bundle: nil)
+        let nextController = storyBoard.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
+        navigationController?.pushViewController(nextController, animated: true)
     }
     
     
@@ -101,11 +102,14 @@ class BasketTableViewController: UIViewController, UITableViewDelegate, UITableV
     func buttonTappedAdd(sender: UIButton!){
         
         let selectedGood = listGoods?[sender.tag]
-        NSLog("Basket :: add :: "+(listGoods?[sender.tag].getName())!)
+        NSLog("SelectCurrency :: add :: "+(listGoods?[sender.tag].getName())!)
         if(Basket.sharedInstance.addGood(good: selectedGood!)){
             
             let indexPath = IndexPath(item: sender.tag, section: 0)
             myTableView.reloadRows(at: [indexPath], with: .fade)
+        }else{
+            
+            alert(message: "Someting happen and we couldn't add item to the basket")
         }
     }
     
@@ -118,7 +122,7 @@ class BasketTableViewController: UIViewController, UITableViewDelegate, UITableV
         let selectedGood = listGoods?[sender.tag]
         if(Basket.sharedInstance.removeGood(good: selectedGood!)){
             
-            NSLog("Basket :: remove :: "+(listGoods?[sender.tag].getName())!)
+            NSLog("SelectCurrency :: remove :: "+(listGoods?[sender.tag].getName())!)
         }
         
         let indexPath = IndexPath(item: sender.tag, section: 0)

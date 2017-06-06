@@ -11,6 +11,7 @@ import Foundation
 class Good {
     
     
+    private let uid: Int
     private let name: String
     private let price: Double
     private let descriptionContainer: String
@@ -25,12 +26,22 @@ class Good {
     ///   - price: price of the good
     ///   - descriptionContainer: optional, description of the good type in singular
     ///   - descriptionContainerPlural: optional, description of the good type in plural
-    init(name: String, price: Double, descriptionContainer: String? = "", descriptionContainerPlural: String? = "") {
+    init(uid: Int, name: String, price: Double, descriptionContainer: String? = "", descriptionContainerPlural: String? = "") {
         
+        self.uid = uid
         self.name = name
         self.price = price
         self.descriptionContainer = descriptionContainer!
         self.descriptionContainerPlural = descriptionContainerPlural!
+    }
+    
+    
+    /// Get Unique ID
+    ///
+    /// - Returns: the ID
+    func getUid() -> Int {
+        
+        return uid
     }
     
     

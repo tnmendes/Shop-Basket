@@ -9,22 +9,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Select Currency View Controller-->
+        <scene sceneID="5Fx-bf-7mH">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="projectBasket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectCurrencyViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0nZ-dY-Xbb" customClass="SelectCurrencyViewController" customModule="projectBasket" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="fBD-Ig-btL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kb9-fK-2CH"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="XR2-me-pqC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SaO-nN-CLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="31" y="143"/>
         </scene>
     </scenes>
 </document>
