@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		74824499B01375D837D49E52 /* Pods_projectBasket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D42255C505C41E30C19C737 /* Pods_projectBasket.framework */; };
 		7DA3499AF095471719F2FB38 /* Pods_projectBasketTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255B32DA776B824D35EB0D84 /* Pods_projectBasketTests.framework */; };
+		C76D1E5F1F10175B0017B465 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76D1E5E1F10175B0017B465 /* RestApiManager.swift */; };
+		C76D1E601F10175B0017B465 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76D1E5E1F10175B0017B465 /* RestApiManager.swift */; };
 		C77458F61EE72E0C00F45428 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77458F51EE72E0C00F45428 /* Extension.swift */; };
 		C77458F71EE72E0C00F45428 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77458F51EE72E0C00F45428 /* Extension.swift */; };
 		C77458F91EE749AC00F45428 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77458F81EE749AC00F45428 /* Utility.swift */; };
@@ -64,6 +66,7 @@
 		7CC655862BAE1EFDABCB8BDD /* Pods-projectBasket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-projectBasket.release.xcconfig"; path = "Pods/Target Support Files/Pods-projectBasket/Pods-projectBasket.release.xcconfig"; sourceTree = "<group>"; };
 		9E589E9D6EA3B11511234BBE /* Pods-projectBasketTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-projectBasketTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-projectBasketTests/Pods-projectBasketTests.release.xcconfig"; sourceTree = "<group>"; };
 		C2EE31BDF1DB5262CAF9376D /* Pods-projectBasket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-projectBasket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-projectBasket/Pods-projectBasket.debug.xcconfig"; sourceTree = "<group>"; };
+		C76D1E5E1F10175B0017B465 /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestApiManager.swift; path = Manager/RestApiManager.swift; sourceTree = "<group>"; };
 		C77458F51EE72E0C00F45428 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extension.swift; path = Utility/Extension.swift; sourceTree = "<group>"; };
 		C77458F81EE749AC00F45428 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = Utility/Utility.swift; sourceTree = "<group>"; };
 		C77458FB1EE74BFD00F45428 /* CheckoutCustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutCustomTableViewCell.swift; path = View/Cell/CheckoutCustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -119,6 +122,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C76D1E5D1F1016AE0017B465 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				C76D1E5E1F10175B0017B465 /* RestApiManager.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
 		C78782701EE7244800CF7F17 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +176,7 @@
 				C7F861A91EE6131E00418832 /* View */,
 				C7F861AA1EE6132500418832 /* Controller */,
 				C7F861AB1EE6134500418832 /* Model */,
+				C76D1E5D1F1016AE0017B465 /* Manager */,
 				C78782701EE7244800CF7F17 /* Utility */,
 				C7F861951EE6104A00418832 /* Info.plist */,
 				C7F861891EE6104A00418832 /* AppDelegate.swift */,
@@ -443,6 +455,7 @@
 				C78782791EE7262A00CF7F17 /* BasketCustomTableViewCell.swift in Sources */,
 				C7F861B31EE613BF00418832 /* Good.swift in Sources */,
 				C77458FF1EE74F2C00F45428 /* SelectCurrencyViewController.swift in Sources */,
+				C76D1E5F1F10175B0017B465 /* RestApiManager.swift in Sources */,
 				C7F861B01EE613A400418832 /* BasketGood.swift in Sources */,
 				C77458FC1EE74BFD00F45428 /* CheckoutCustomTableViewCell.swift in Sources */,
 				C77458F91EE749AC00F45428 /* Utility.swift in Sources */,
@@ -464,6 +477,7 @@
 				C7F8619F1EE6104A00418832 /* projectBasketTests.swift in Sources */,
 				C7F861B41EE613BF00418832 /* Good.swift in Sources */,
 				C77459001EE74F2C00F45428 /* SelectCurrencyViewController.swift in Sources */,
+				C76D1E601F10175B0017B465 /* RestApiManager.swift in Sources */,
 				C77458F71EE72E0C00F45428 /* Extension.swift in Sources */,
 				C787827A1EE7262A00CF7F17 /* BasketCustomTableViewCell.swift in Sources */,
 				C77458FD1EE74BFD00F45428 /* CheckoutCustomTableViewCell.swift in Sources */,

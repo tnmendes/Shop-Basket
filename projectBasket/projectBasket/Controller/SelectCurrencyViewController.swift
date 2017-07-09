@@ -82,23 +82,20 @@ class SelectCurrencyViewController: UIViewController, UITableViewDelegate, UITab
     /// After receiving the table view is update
     func networkGetListCurrency() {
         
-        Alamofire.request(Configuration.getApiUrlList()).validate().responseJSON { response in
-            switch response.result {
-            case .success:
+        let rest = RestApiManager()
+        rest.networkGetListCurrency(onSuccess: { (arr) -> () in
+            
+            for (currencyCode, countryName) in arr["currencies"] as! NSDictionary {
                 
-                let responseJSON = response.result.value as! [String:AnyObject]
-                for (currencyCode, countryName) in responseJSON["currencies"] as! NSDictionary {
-                    
-                    self.listCurrency.append([currencyCode as! String, countryName as! String])
-                }
-                self.myTableView.reloadData()
-                
-            case .failure(let error):
-                
-                NSLog(error.localizedDescription )
-                self.alert(message: "Fail to get Currency List")
+                self.listCurrency.append([currencyCode as! String, countryName as! String])
             }
+            self.myTableView.reloadData()
+        },
+        onFailure: { (err) -> () in
+            
+            self.alert(message: "Fail to get Currency List")
         }
+        )
     }
     
 }

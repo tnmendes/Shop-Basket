@@ -88,39 +88,37 @@ class projectBasketTests: XCTestCase {
         
         // Given
         let expectation = self.expectation(description: "request should succeed")
-        var response: DataResponse<Any>?
         var valUSD: Bool = false
         var valEUR: Bool = false
         
-        // When
-        Alamofire.request(Configuration.getApiUrlList()).validate().responseJSON { resp in
+        let rest = RestApiManager()
+        rest.networkGetListCurrency(
+            onSuccess: { (responseJSON) -> () in
             
-            response = resp
-            expectation.fulfill()
-        }
-        
+                for (currencyCode, countryName) in responseJSON["currencies"] as AnyObject as! NSDictionary {
+                
+                    if(currencyCode as! String == "USD" && countryName as! String == "United States Dollar"){
+                    
+                        valUSD = true
+                    }
+                
+                    if(currencyCode as! String == "EUR" && countryName as! String == "Euro"){
+                    
+                        valEUR = true
+                    }
+                }
+            
+                XCTAssert(valUSD)
+                XCTAssert(valEUR)
+                expectation.fulfill()
+            },
+            onFailure: { (err) -> () in
+                                        
+                XCTAssertTrue(false) // Fail request to API
+            }
+        )
+
         waitForExpectations(timeout: 10.0, handler: nil)
-        
-        // Then
-        let responseJSON = response?.result.value as! [String:AnyObject]
-        for (currencyCode, countryName) in responseJSON["currencies"] as! NSDictionary {
-            
-            if(currencyCode as! String == "USD" && countryName as! String == "United States Dollar"){
-                
-                valUSD = true
-            }
-            
-            if(currencyCode as! String == "EUR" && countryName as! String == "Euro"){
-                
-                valEUR = true
-            }
-        }
-        
-        XCTAssertNotNil(response?.request)
-        XCTAssertNotNil(response?.response)
-        XCTAssertNotNil(response?.data)
-        XCTAssert(valUSD)
-        XCTAssert(valEUR)
     }
     
     
@@ -131,7 +129,6 @@ class projectBasketTests: XCTestCase {
         
         // Given
         let expectation = self.expectation(description: "request should succeed")
-        var response: DataResponse<Any>?
         let currency: String = "LAK" //Laotian Kip value is 1 USD = 8200 LAK
         var currencyQuote: Double = 0.0
         var basketList = basket.getBasketList()
@@ -141,31 +138,32 @@ class projectBasketTests: XCTestCase {
         _ = basket.addGood(good: selectedGood1!)
         
         // When
-        Alamofire.request(Configuration.getApiUrlQuotes(currency: currency)).validate().responseJSON { resp in
+        let rest = RestApiManager()
+        rest.networkGetCurrencyQuote(currency: currency,
+                                     onSuccess: { (responseJSON) -> () in
+
+                                        // Then
+                                        for (_, tempCurrencyQuote) in responseJSON["quotes"] as AnyObject as! NSDictionary {
+                                            
+                                            currencyQuote = tempCurrencyQuote as! Double
+                                        }
+                                        
+                                        XCTAssertLessThan(self.basket.totalPrice(), 100)
+                                        
+                                        print("Value of the currency: \(currencyQuote)")
+                                        self.basket.setCurrencyQuotes(currencyQuotes: currencyQuote)
+
+                                        XCTAssertGreaterThan(100, self.basket.totalPrice())
+                                        
+                                        expectation.fulfill()
+        },onFailure: { (err) -> () in
             
-            response = resp
-            expectation.fulfill()
+            XCTAssertTrue(false) // Fail request to API
         }
+        )
         
         waitForExpectations(timeout: 10.0, handler: nil)
-        
-        // Then
-        let responseJSON = response?.result.value as! [String:AnyObject]
-        for (_, tempCurrencyQuote) in responseJSON["quotes"] as! NSDictionary {
-            
-            currencyQuote = tempCurrencyQuote as! Double
-        }
-        
-        XCTAssertLessThan(basket.totalPrice(), 100)
-        
-        print("Value of the currency: \(currencyQuote)")
-        basket.setCurrencyQuotes(currencyQuotes: currencyQuote)
-        
-        XCTAssertNotNil(response?.request)
-        XCTAssertNotNil(response?.response)
-        XCTAssertNotNil(response?.data)
-        XCTAssertGreaterThan(100, basket.totalPrice())
-        _ = basket.removeGood(good: selectedGood1!)
+        _ = self.basket.removeGood(good: selectedGood1!)
     }
     
     
@@ -174,33 +172,29 @@ class projectBasketTests: XCTestCase {
     func testThatQuoteAsSameRateToTheSameQuoteInTheAPI() {
         
         // Given
-        let expectation = self.expectation(description: "request should succeed")
-        var response: DataResponse<Any>?
         let currency: String = Configuration.defaultCurrencyCode
         var currencyQuote: Double = 0.0
         
+        
         // When
-        Alamofire.request(Configuration.getApiUrlQuotes(currency: currency)).validate().responseJSON { resp in
+        let rest = RestApiManager()
+        rest.networkGetCurrencyQuote(currency: currency,
+                                     onSuccess: { (responseJSON) -> () in
+                                        
+                                        // Then
+                                        for (_, tempCurrencyQuote) in responseJSON["quotes"] as AnyObject as! NSDictionary {
+                                            
+                                            currencyQuote = tempCurrencyQuote as! Double
+                                        }
+                                        print("Value of the currency: \(currencyQuote)")
+                                        XCTAssertEqual( 1.0000, currencyQuote )
+                                        
+        },onFailure: { (err) -> () in
             
-            response = resp
-            expectation.fulfill()
+            XCTAssertTrue(false) // Fail request to API
         }
-        
-        waitForExpectations(timeout: 10.0, handler: nil)
-        
-        // Then
-        let responseJSON = response?.result.value as! [String:AnyObject]
-        for (_, tempCurrencyQuote) in responseJSON["quotes"] as! NSDictionary {
-            
-            currencyQuote = tempCurrencyQuote as! Double
-        }
-        
-        print("Value of the currency: \(currencyQuote)")
-        
-        XCTAssertNotNil(response?.request)
-        XCTAssertNotNil(response?.response)
-        XCTAssertNotNil(response?.data)
-        XCTAssertEqual( 1.0000, currencyQuote )
+        )
+
     }
     
     
@@ -208,28 +202,23 @@ class projectBasketTests: XCTestCase {
     func testThatUnknownCurrencyDeliversAnError() {
         
         // Given
-        let expectation = self.expectation(description: "request should succeed")
-        var response: DataResponse<Any>?
         let currency: String = "ERRR" //invalid Currency
         var success: Bool = true
         
+        
         // When
-        Alamofire.request(Configuration.getApiUrlQuotes(currency: currency)).validate().responseJSON { resp in
+        let rest = RestApiManager()
+        rest.networkGetCurrencyQuote(currency: currency,
+                                     onSuccess: { (responseJSON) -> () in
+                                        
+                                        // Then
+                                        success = responseJSON["success"] as AnyObject as! Bool
+                                        XCTAssertFalse(success)
+        },onFailure: { (err) -> () in
             
-            response = resp
-            expectation.fulfill()
+            XCTAssertTrue(false) // Fail request to API
         }
-        
-        waitForExpectations(timeout: 10.0, handler: nil)
-        
-        // Then
-        let responseJSON = response?.result.value as! [String:AnyObject]
-        success = responseJSON["success"] as! Bool
-        
-        XCTAssertNotNil(response?.request)
-        XCTAssertNotNil(response?.response)
-        XCTAssertNotNil(response?.data)
-        XCTAssertFalse(success)
+        )
     }
     
     

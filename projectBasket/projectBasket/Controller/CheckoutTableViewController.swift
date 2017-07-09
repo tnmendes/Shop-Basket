@@ -161,12 +161,11 @@ class CheckoutViewController: UIViewController , UITableViewDelegate, UITableVie
     /// - Parameter currency: currency code
     private func networkGetCurrencyQuote(currency: String) {
         
-        Alamofire.request(Configuration.getApiUrlQuotes(currency: currency)).validate().responseJSON { response in
-            switch response.result {
-            case .success:
-                
-                let responseJSON = response.result.value as! [String:AnyObject]
-                for (_, currencyQuotes) in responseJSON["quotes"] as! NSDictionary {
+        let rest = RestApiManager()
+        rest.networkGetCurrencyQuote(currency: currency,
+            onSuccess: { (arr) -> () in
+            
+                for (_, currencyQuotes) in arr["quotes"] as! NSDictionary {
                     
                     Basket.sharedInstance.setCurrencyQuotes(currencyQuotes: currencyQuotes as! Double)
                 }
@@ -174,13 +173,12 @@ class CheckoutViewController: UIViewController , UITableViewDelegate, UITableVie
                 let totalPrice = Basket.sharedInstance.totalPriceFormatted()
                 self.labTotalPrice.text = "\(totalPrice)"
                 self.myTableView.reloadData()
-                
-            case .failure(let error):
-                
-                NSLog(error.localizedDescription)
-                self.alert(message: "Fail to update Currency Quote")
+            },onFailure: { (err) -> () in
+                                        
+               self.alert(message: "Fail to update Currency Quote")
             }
-        }
+        )
+        
     }
     
 }
